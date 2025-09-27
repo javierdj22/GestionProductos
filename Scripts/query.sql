@@ -1,0 +1,1 @@
+SELECT * FROM Productos WHERE Precio > 1000;
