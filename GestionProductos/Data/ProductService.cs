@@ -18,11 +18,19 @@ namespace GestionProductos.Data
 
         public async Task AddProductAsync(Product product)
         {
+            if (product is null)
+                throw new ArgumentNullException(nameof(product), "El producto no puede ser nulo.");
+
             if (string.IsNullOrWhiteSpace(product.Name))
-                throw new ArgumentException("El nombre no puede estar vacío.");
+                throw new ArgumentNullException(nameof(product.Name), "El nombre no puede estar vacío.");
+
+            product.Name = product.Name.Trim();
+
             if (product.Price <= 0)
-                throw new ArgumentException("El precio debe ser mayor que 0.");
+                throw new ArgumentOutOfRangeException(nameof(product.Price), "El precio debe ser mayor que 0.");
+
             await _products.InsertOneAsync(product);
         }
+
     }
 }
